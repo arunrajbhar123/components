@@ -68,7 +68,7 @@ const Pin = ({ length, onChange,demoOTP }) => {
       {inputBoxLen.map((el, index) => {
         return (
           <input
-            style={status ? {   outline: "1px solid #45934590 ",background:"#45934590"} : null}
+            style={status ? {   outline: "1px solid #45934590 ",background:"#45934590",color:"green"} : null}
             ref={(element) => {
               inputRef.current[index] = element;
             }}
