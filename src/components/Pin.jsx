@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 import { useState, useRef } from "react";
-const Pin = ({ length, onChange }) => {
+const Pin = ({ length, onChange,demoOTP }) => {
   const inputRef = useRef([]);
-
   const [inputBoxLen] = useState(new Array(length).fill(1));
   const [inputValue, setInputValue] = useState(new Array(length).fill(""));
+  const [status, setStatus] = useState();
+
+
   const handleInput = (e, index) => {
     inputValue[index] = e.target.value;
     setInputValue(inputValue);
@@ -12,6 +14,12 @@ const Pin = ({ length, onChange }) => {
       inputRef.current[index + 1].focus();
     }
     onChange(inputValue.join(""));
+    if(inputValue.join("")===demoOTP){
+      setStatus(true)
+    }else{
+      setStatus(false)
+
+    }
   };
   const handleKeyAction = (e, i) => {
     inputValue[i] = e.target.value;
@@ -20,6 +28,7 @@ const Pin = ({ length, onChange }) => {
       handleBackSpace(e, i);
       inputValue[i] = e.target.value = "";
       setInputValue(inputValue);
+      setStatus(false)
     } else {
       handleInput(e, i);
     }
@@ -46,10 +55,20 @@ const Pin = ({ length, onChange }) => {
     });
   };
   return (
-    <div onPaste={handleOnPaste} style={{background:"grey",width:"20%",margin:"0.5rem auto",borderRadius:"5px",padding:"2rem"}}>
+    <div
+      onPaste={handleOnPaste}
+      style={{
+        background: "#E8ECEF",
+        width: "25rem",
+        margin: "0.5rem auto",
+        borderRadius: "5px",
+        padding: "2rem",
+      }}
+    >
       {inputBoxLen.map((el, index) => {
         return (
           <input
+            style={status ? {   outline: "1px solid #45934590 ",background:"#45934590"} : null}
             ref={(element) => {
               inputRef.current[index] = element;
             }}
